@@ -5,7 +5,7 @@ import Footer from "../Footer.js";
 function Layout() {
   return (
     <>
-      <div className="w-full">
+      <div className="w-full layout">
         <NavBar/>
         <Outlet />
         <Footer/>

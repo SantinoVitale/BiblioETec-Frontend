@@ -9,6 +9,7 @@ import {
   Select, 
   Option
 } from "@material-tailwind/react";
+import Swal from 'sweetalert2'
 
 function FormBook() {
   const Values = {
@@ -27,11 +28,8 @@ function FormBook() {
   fetchData()
   }, [])
 
-  const captureData = (e) => {
-    const {name, value} = e.target
-    console.log(name);
-    console.log(value);
-    setCartBook({...cartBook, [name]: value})
+  const captureData = (name, value) => {
+    setCartBook({ ...cartBook, [name]: value });
     console.log(cartBook);
   }
 
@@ -43,7 +41,14 @@ function FormBook() {
       books: cartBook.books
     }
 
+    console.log();
     await axios.post("http://localhost:8080/api/booksManager", newCardBook);
+    Swal.fire({
+      icon: 'success',
+      title: '¡Operacion exitosa!',
+      text: 'La carta del libro fue agregada de manera exitosa!',
+      footer: '<a href="/">Volver al inicio</a>'
+    })
     setCartBook({...Values})
   }
   
@@ -57,16 +62,20 @@ function FormBook() {
       <Typography color="gray" className="mt-1 font-normal">
         Ingrese los datos para retirar el libro.
       </Typography>
-      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={postCardBook}>
+      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
         <div className="mb-4 flex flex-col gap-6">
-          <Input label="Titulo" value={cartBook.title} onChange={captureData}/>
-              <Select label="Libros" value={cartBook.books} onChange={captureData}>
-                {books.map((book) => (
-                  <Option value={book._id}>{book.title}</Option>
-                ))}
-          </Select>
+          <div className="mb-4 flex flex-col gap-6">
+          <Input size="lg" label="Titulo de la tarjeta" onChange={(e) => captureData("title", e.target.value)} name='title'/>
+            <div className="w-72">
+            <Select label="Libro" onChange={(value) => captureData('books', value._id)}>
+              {books.map((book) => (
+                <Option key={book._id} value={book}>{book.title}</Option>
+              ))}
+            </Select>
+            </div>
+          </div>
         </div>
-        <Button className="mt-6" fullWidth>
+        <Button className="mt-6" fullWidth onClick={postCardBook}>
           Guardar
         </Button>
       </form>
