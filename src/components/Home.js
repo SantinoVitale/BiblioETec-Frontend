@@ -28,7 +28,8 @@ function Home() {
     }).then( async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:8080/api/booksManager/` + bid)
+        const res = await axios.delete(`http://localhost:8080/api/booksManager/` + bid)
+        console.log(res);
         const getData = await axios.get("http://localhost:8080/api/booksManager")
         const data = getData.data.payload.booksCard
         setList(data)
@@ -45,6 +46,7 @@ function Home() {
     <div>
         <h1 className='text-center text-2xl p-10'>Retiro de libros</h1>
         <div className="flex flex-wrap justify-center">
+<<<<<<< HEAD
           <div className="choose">
               <a href="#list-th"><i class="bi bi-card-text"></i></a>
               <a href="#large-th"><i class="bi bi-card-heading"></i></a>
@@ -52,6 +54,15 @@ function Home() {
         </div>
         <div id="list-th" className="books-manager-container">
         {list.map((booksCard) => (
+=======
+        <div className="choose">
+        <a href="#list-th"><i class="bi bi-grid-fill"></i></a>
+        <a href="#large-th"><i class="fa fa-th-large" aria-hidden="true">b</i></a>
+      </div>
+      </div>
+      <div className='flex flex-wrap' id="list-th">
+      {list.map((booksCard) => (
+>>>>>>> f448299b9cf77d5657e52ba205412b41de7e3306
         <div className="book read">
           <div className="cover">
             <img src={booksCard.books.img} alt='imagen Libro'/>
@@ -62,12 +73,18 @@ function Home() {
             <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
             <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>
             <div className="flex justify-center">
+<<<<<<< HEAD
               <Button className='mb-5 button-custom' color='red' onClick={() => deleteBookCard(booksCard._id)}>Borrar</Button>
+=======
+              <Button className='mb-5' color='red' onClick={() => deleteBookCard(booksCard._id)}>Borrar</Button>
+>>>>>>> f448299b9cf77d5657e52ba205412b41de7e3306
             </div>
             
           </div>
         </div>
         ))}
+      </div>
+        
         </div>
         </div>
   );
