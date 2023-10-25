@@ -54,7 +54,7 @@ function FormBook() {
   
   
   return (
-    <div className='flex justify-center items-center'>
+    <div className='flex justify-center items-center m-[100px]'>
     <Card color="transparent" shadow={false}>
       <Typography variant="h4" color="blue-gray">
         Formulario para retirar libro
@@ -65,7 +65,7 @@ function FormBook() {
       <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
         <div className="mb-4 flex flex-col gap-6">
           <div className="mb-4 flex flex-col gap-6">
-          <Input size="lg" label="Titulo de la tarjeta" onChange={(e) => captureData("title", e.target.value)} name='title'/>
+          <Input size="lg" label="Usuario que retira" onChange={(e) => captureData("title", e.target.value)} name='title'/>
             <div className="w-72">
             <Select label="Libro" onChange={(value) => captureData('books', value._id)}>
               {books.map((book) => (
