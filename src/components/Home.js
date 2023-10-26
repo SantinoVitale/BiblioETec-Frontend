@@ -3,19 +3,49 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
-import { Button } from "@material-tailwind/react";
+import { Button, Alert } from "@material-tailwind/react";
+import moment from "moment-timezone";
 
 function Home() {
   const [list, setList] = useState([])
+  const [cardBooksWithExpiredDelivery, setCardBooksWithExpiredDelivery] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("http://localhost:8080/api/booksManager")
-      const data = res.data.payload.booksCard
-      setList(data)
-    }
-    fetchData()
-  }, [])
+      const res = await axios.get("http://localhost:8080/api/booksManager");
+      const bookCardsData = res.data.payload.booksCard.map((bookCard) => {
+        return {
+          ...bookCard,
+          expireDate: moment(bookCard.expireDate).format(),
+          retiredDate: moment(bookCard.retiredDate).format(),
+        };
+      });
+      const timer = setInterval(() => {
+        const currentDateTime = moment().format();
+        const bookCardsConEntregaVencida = bookCardsData.filter((bookCard) => {
+          return moment(bookCard.expireDate).isBefore(currentDateTime);
+        });
+        if (bookCardsConEntregaVencida.length > 0) {
+          // Actualiza la lista de bookCards excluyendo los vencidos
+          const updatedList = bookCardsData.filter((bookCard) => {
+            return !bookCardsConEntregaVencida.some((vencido) => vencido._id === bookCard._id);
+          });
+          
+
+          setList(updatedList);
+          setCardBooksWithExpiredDelivery(bookCardsConEntregaVencida);
+          setShowAlert(true);
+        } else {
+          setCardBooksWithExpiredDelivery([]);
+          setShowAlert(false);
+        }
+      }, 1000);
+      
+      return () => clearInterval(timer);
+    };
+    fetchData();
+  }, []);
 
   const deleteBookCard = async (bid) => {
     console.log(bid);
@@ -51,23 +81,49 @@ function Home() {
       </div>
       </div>
         <div id="list-th" className='books-manager-container'>
-        {list.map((booksCard) => (
-        <div className="book read">
-          <div className="cover">
-            <img src={booksCard.books.img} alt='imagen Libro'/>
-          </div>
-          <div className="description">
-            <p className='leading-relaxed mb-3 font-bold title'>{booksCard.title}</p>
-            <p className="leading-relaxed mb-3 bookTitle">Libro: {booksCard.books.title}</p>
-            <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
-            <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>
-            <div className="flex justify-center">
-              <Button className='mb-5' color='red' onClick={() => deleteBookCard(booksCard._id)}>Borrar</Button>
+        <div className="col-md-10 mb-2 mt-4 expired-area">
+              {showAlert && cardBooksWithExpiredDelivery.length > 0 && (
+                <div className="alert alert-danger">
+                  <Alert icon={<i class="bi bi-exclamation-triangle-fill"></i>} variant='ghost' color="amber">La hora de entrega ha pasado para las siguientes tarjetas:</Alert>
+                    {cardBooksWithExpiredDelivery.map((booksCard) => (
+                      <div className="book expired read" key={booksCard._id}>
+                        <div className="cover">
+                          <img src={booksCard.books.img} alt='imagen Libro'/>
+                        </div>
+                        <div className="description">
+                          <p className='leading-relaxed mb-3 font-bold title'>{booksCard.title}</p>
+                          <p className="leading-relaxed mb-3 bookTitle">Libro: {booksCard.books.title}</p>
+                          <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
+                          <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>
+                          <div className="flex justify-center">
+                            <Button className='mb-5 p-[10px] m-[10px]' color='red' onClick={() => deleteBookCard(booksCard._id)}>Borrar</Button>
+                            <Button className='mb-5 p-[10px] m-[10px]' color='yellow'>Notificar alumno</Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
-            
+        <div className="cardBooks-area">
+          {list.map((booksCard) => (
+          <div className="book read" key={booksCard._id}>
+            <div className="cover">
+              <img src={booksCard.books.img} alt='imagen Libro'/>
+            </div>
+            <div className="description">
+              <p className='leading-relaxed mb-3 font-bold title'>{booksCard.title}</p>
+              <p className="leading-relaxed mb-3 bookTitle">Libro: {booksCard.books.title}</p>
+              <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
+              <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>
+              <div className="flex justify-center">
+                <Button className='mb-5' color='red' onClick={() => deleteBookCard(booksCard._id)}>Borrar</Button>
+              </div>
+              
+            </div>
           </div>
+          ))}
         </div>
-        ))}
         </div>
         </div>
   );

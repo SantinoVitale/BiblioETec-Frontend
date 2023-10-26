@@ -39,9 +39,17 @@ footer {
 }
 
 .books-manager-container{
-  display: flex;
+  display: grid;
+  grid-template-areas: "expired cardBooks";
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.expired-area{
+  grid-area: expired;
+}
+.cardBooks-area{
+  grid-area: cardBooks;
 }
 /******************************************
 Book stuff
@@ -56,6 +64,11 @@ Book stuff
   vertical-align: top;
   transition: height 1s;
 }
+
+.expired{
+  
+  box-shadow: 0 0 20px #ff0000;
+}
 /* star button */
 .book:after {
   font-family: FontAwesome;
@@ -69,6 +82,10 @@ Book stuff
 .cover {
   border: 2px solid gray;
   overflow: hidden;
+}
+
+.expired .cover{
+  border: 2px solid red;
 }
 
 .cover img {
