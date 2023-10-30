@@ -90,6 +90,7 @@ Book stuff
 
 .cover img {
   width: 100%;
+  height: 300px;
 }
 
 .book .author {

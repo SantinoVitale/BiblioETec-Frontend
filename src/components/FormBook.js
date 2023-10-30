@@ -75,7 +75,7 @@ function FormBook() {
             </div>
           </div>
         </div>
-        <Button className="mt-6" fullWidth onClick={postCardBook}>
+        <Button className="mt-6" fullWidth onClick={postCardBook} variant='gradient' color='blue'>
           Guardar
         </Button>
       </form>
