@@ -21,7 +21,7 @@ function FormBook() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("http://localhost:8080/api/books")
+      const res = await axios.get("/api/books")
       const data = res.data.payload.books
       setBooks(data)
     }

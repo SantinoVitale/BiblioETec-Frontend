@@ -58,8 +58,8 @@ function Home() {
     }).then( async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:8080/api/booksManager/` + bid)
-        const getData = await axios.get("http://localhost:8080/api/booksManager")
+        await axios.delete(`/api/booksManager/` + bid)
+        const getData = await axios.get("/api/booksManager")
         const data = getData.data.payload.booksCard
         setList(data)
         Swal.fire('Borrado!', 'La carta se borró con éxito', 'success')
@@ -76,15 +76,15 @@ function Home() {
         <h1 className='text-center text-2xl p-10'>Retiro de libros</h1>
         <div className="flex flex-wrap justify-center">
         <div className="choose">
-        <a href="#list-th"><i class="bi bi-card-text"></i></a>
-        <a href="#large-th"><i class="bi bi-card-heading"></i></a>
+        <a href="#list-th"><i className="bi bi-card-text"></i></a>
+        <a href="#large-th"><i className="bi bi-card-heading"></i></a>
       </div>
       </div>
         <div id="list-th" className='books-manager-container'>
         <div className="col-md-10 mb-2 mt-4 expired-area">
               {showAlert && cardBooksWithExpiredDelivery.length > 0 && (
                 <div className="alert alert-danger">
-                  <Alert icon={<i class="bi bi-exclamation-triangle-fill"></i>} variant='ghost' color="amber">La hora de entrega ha pasado para las siguientes tarjetas:</Alert>
+                  <Alert icon={<i className="bi bi-exclamation-triangle-fill"></i>} variant='ghost' color="amber">La hora de entrega ha pasado para las siguientes tarjetas:</Alert>
                     {cardBooksWithExpiredDelivery.map((booksCard) => (
                       <div className="book expired read" key={booksCard._id}>
                         <div className="cover">
