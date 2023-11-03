@@ -16,13 +16,16 @@ function Login() {
     const { email, password } = data;
     try
     {
-      const { data } = await axios.post("/api/users/login", {
+      await axios.post("/api/users/login", {
         email,
         password
       })
-      toast.success("Logged successfully! Welcome to BiblioETec");
-      setData({});
-      navigate("/");
+      .then(() => 
+      {
+        toast.success("Logged successfully! Welcome to BiblioETec");
+        setData({});
+        navigate("/");
+      })
     } catch(error)
     {
       toast.error(error.response.data.message);

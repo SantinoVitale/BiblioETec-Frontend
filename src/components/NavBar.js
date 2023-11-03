@@ -1,7 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import '../App.css';
+import { useContext } from 'react';
 
 function NavBar() {
+  const {user} = useContext();
+
+  const handleLogout = () => {
+    
+  }
+
   return (
     
     <div className="bg-gradient-to-r from-purple-800 to-indigo-800 h-20 flex items-center justify-between">
@@ -9,7 +16,15 @@ function NavBar() {
         <div>
             <NavLink to="/form-books" className="text-white text-xl p-5">Retirar Libro</NavLink>
             <NavLink to="/book-manager" className="text-white text-xl p-5">Administrar Libros</NavLink>
-            <NavLink to="/login" className="text-white text-xl p-5">Login</NavLink>
+            {user ? (
+          <button className="text-white text-xl p-5" onClick={handleLogout}>
+            Logout
+          </button>
+        ) : (
+          <NavLink to="/login" className="text-white text-xl p-5">
+            Login
+          </NavLink>
+        )}
         </div>
         
     </div>
