@@ -12,7 +12,6 @@ export function UserContextProvider({children}){
   useEffect(() => {
     if(!user){
       axios.get("/api/users/getUser").then((data) => {
-        console.log(data);
         if(!data.data.valid)
         {
           toast.error("Not logged, please log in")

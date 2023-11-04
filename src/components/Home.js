@@ -65,6 +65,7 @@ function Home() {
       if (result.isConfirmed) {
         await axios.delete(`/api/booksManager/${bid}`).then( () => {
           fetchData();
+          Swal.fire('¡Borrado!', 'La carta fue borrada con éxito', 'success');
         })
       } else if (result.isDenied) {
         Swal.fire('Cancelado', 'La carta no fue borrada', 'info');
@@ -84,8 +85,8 @@ function Home() {
       <>
         <div className="flex flex-wrap justify-center">
           <div className="choose">
-            <a href="#list-th"><i className="bi bi-card-text"></i></a>
-            <a href="#large-th"><i className="bi bi-card-heading"></i></a>
+            <a href="#list-th"><i className="bi bi-grid"></i></a>
+            <a href="#large-th"><i className="bi bi-layout-split"></i></a>
           </div>
         </div>
         <div id="list-th" className='books-manager-container'>

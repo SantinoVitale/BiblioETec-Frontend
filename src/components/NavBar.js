@@ -1,12 +1,23 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import '../App.css';
 import { useContext } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { UserContext } from '../context/userContext';
 
 function NavBar() {
-  const {user} = useContext();
+  const {user} = useContext(UserContext);
+  const navigate = useNavigate()
 
-  const handleLogout = () => {
-    
+  const handleLogout = async () => {
+    await axios.get("/api/users/logout")
+    .then((res) => {
+      if(!res.data.valid)
+        toast.error("something went wrong");
+
+      toast.success("Logout succesfully, see you later!");
+      navigate("/login");
+    })
   }
 
   return (
