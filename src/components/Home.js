@@ -100,7 +100,7 @@ function Home() {
                           <img src={booksCard.books.img} alt='imagen Libro'/>
                         </div>
                         <div className="description">
-                          <p className='leading-relaxed mb-3 font-bold title'>{booksCard.title}</p>
+                          <p className='leading-relaxed mb-3 font-bold title'>Usuario: {booksCard.owner.firstName} {booksCard.owner.lastName}</p>
                           <p className="leading-relaxed mb-3 bookTitle">Libro: {booksCard.books.title}</p>
                           <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
                           <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>
@@ -118,7 +118,7 @@ function Home() {
         {!isLoading && (
         <div>
           {list.length === 0 ? (
-            <div className="alert alert-info">
+            <div className="alert alert-info mt-10">
               <Alert icon={<i className="bi bi-info-circle-fill"></i>} variant='ghost' color="blue">
                 No hay libros para cargar.
               </Alert>
@@ -131,7 +131,7 @@ function Home() {
                   <img src={booksCard.books.img} alt='imagen Libro'/>
                 </div>
                 <div className="description">
-                  <p className='leading-relaxed mb-3 font-bold title'>{booksCard.title}</p>
+                  <p className='leading-relaxed mb-3 font-bold title'>Usuario: {booksCard.owner.firstName} {booksCard.owner.lastName}</p>
                   <p className="leading-relaxed mb-3 bookTitle">Libro: {booksCard.books.title}</p>
                   <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
                   <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>

@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { UserContext } from '../context/userContext';
+import { Avatar, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
 
 function NavBar() {
   const {user} = useContext(UserContext);
@@ -28,14 +29,43 @@ function NavBar() {
             <NavLink to="/form-books" className="text-white text-xl p-5">Retirar Libro</NavLink>
             <NavLink to="/book-manager" className="text-white text-xl p-5">Administrar Libros</NavLink>
             {user ? (
-          <button className="text-white text-xl p-5" onClick={handleLogout}>
-            Logout
-          </button>
-        ) : (
-          <NavLink to="/login" className="text-white text-xl p-5">
-            Login
-          </NavLink>
-        )}
+              <Menu>
+              <MenuHandler>
+                <Avatar
+                  variant="circular"
+                  className="cursor-pointer mr-5"
+                  alt='Avatar'
+                  src='./img/user.png'
+                />
+              </MenuHandler>
+              <MenuList>
+                <MenuItem className="flex items-center gap-2">
+                  <i className="bi bi-person-fill"></i>
+                  <Typography variant="small" className="font-medium">
+                    Mi perfil
+                  </Typography>
+                </MenuItem>
+                <MenuItem className="flex items-center gap-2">
+                  <i className="bi bi-gear-fill"></i>
+                  <Typography variant="small" className="font-medium">
+                    Editar perfil
+                  </Typography>
+                </MenuItem>
+                <hr className="my-2 border-blue-gray-50" />
+                <MenuItem className="flex items-center gap-2 ">
+                  <i className="bi bi-arrow-bar-right"></i>
+                  <Typography variant="small" className="font-medium" onClick={handleLogout}>
+                    Cerrar sesión
+                  </Typography>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+
+            ) : (
+                <NavLink to="/login" className="text-white text-xl p-5">
+                  Login
+                </NavLink>
+            )}
         </div>
         
     </div>

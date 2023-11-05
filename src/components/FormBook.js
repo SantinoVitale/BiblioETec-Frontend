@@ -1,6 +1,6 @@
 import '../App.css';
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   Input,
@@ -10,10 +10,11 @@ import {
   Option
 } from "@material-tailwind/react";
 import Swal from 'sweetalert2'
+import { UserContext } from '../context/userContext';
 
 function FormBook() {
+  const { user } = useContext(UserContext)
   const Values = {
-    title: "",
     books: ""
   }
   const [cartBook, setCartBook] = useState(Values)
@@ -30,18 +31,16 @@ function FormBook() {
 
   const captureData = (name, value) => {
     setCartBook({ ...cartBook, [name]: value });
-    console.log(cartBook);
   }
 
   const postCardBook = async (e) => {
     e.preventDefault();
 
     const newCardBook = {
-      title: cartBook.title,
+      user: user.id,
       books: cartBook.books
     }
 
-    console.log();
     await axios.post("http://localhost:8080/api/booksManager", newCardBook);
     Swal.fire({
       icon: 'success',
@@ -65,7 +64,6 @@ function FormBook() {
       <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
         <div className="mb-4 flex flex-col gap-6">
           <div className="mb-4 flex flex-col gap-6">
-          <Input size="lg" label="Usuario que retira" onChange={(e) => captureData("title", e.target.value)} name='title'/>
             <div className="w-72">
             <Select label="Libro" onChange={(value) => captureData('books', value._id)}>
               {books.map((book) => (
