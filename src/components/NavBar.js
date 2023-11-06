@@ -7,7 +7,7 @@ import { UserContext } from '../context/userContext';
 import { Avatar, Menu, MenuHandler, MenuItem, MenuList, Typography } from '@material-tailwind/react';
 
 function NavBar() {
-  const {user} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -18,6 +18,7 @@ function NavBar() {
 
       toast.success("Logout succesfully, see you later!");
       navigate("/login");
+      setUser(null)
     })
   }
 
@@ -26,9 +27,12 @@ function NavBar() {
     <div className="bg-gradient-to-r from-purple-800 to-indigo-800 h-20 flex items-center justify-between">
         <NavLink to="/" className="text-white text-3xl font-semibold p-5">BiblioETec</NavLink>
         <div>
-            <NavLink to="/form-books" className="text-white text-xl p-5">Retirar Libro</NavLink>
-            <NavLink to="/book-manager" className="text-white text-xl p-5">Administrar Libros</NavLink>
             {user ? (
+            <>
+            <NavLink to="/form-books" className="text-white text-xl p-5">Retirar Libro</NavLink>
+            {user.role === "profesor" && (
+              <NavLink to="/book-manager" className="text-white text-xl p-5">Administrar Libros</NavLink>
+            )}
               <Menu>
               <MenuHandler>
                 <Avatar
@@ -60,7 +64,7 @@ function NavBar() {
                 </MenuItem>
               </MenuList>
             </Menu>
-
+            </>
             ) : (
                 <NavLink to="/login" className="text-white text-xl p-5">
                   Login

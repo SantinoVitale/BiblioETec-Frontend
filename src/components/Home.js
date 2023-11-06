@@ -56,19 +56,18 @@ function Home() {
 
   const deleteBookCard = async (bid) => {
     Swal.fire({
-      title: '¿Estás seguro de borrar esta tarjeta?',
+      title: '¿Estás seguro de confirmar devolucón de esta tarjeta?',
       showDenyButton: true,
-      showCancelButton: true,
       confirmButtonText: 'Si',
       denyButtonText: `No`,
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axios.delete(`/api/booksManager/${bid}`).then( () => {
           fetchData();
-          Swal.fire('¡Borrado!', 'La carta fue borrada con éxito', 'success');
+          Swal.fire('¡Devuelto!', 'Se confirmo la devolución con éxito', 'success');
         })
       } else if (result.isDenied) {
-        Swal.fire('Cancelado', 'La carta no fue borrada', 'info');
+        Swal.fire('Cancelado', 'La carta no fue devuelta', 'info');
       }
     });
   }
@@ -120,7 +119,7 @@ function Home() {
           {list.length === 0 ? (
             <div className="alert alert-info mt-10">
               <Alert icon={<i className="bi bi-info-circle-fill"></i>} variant='ghost' color="blue">
-                No hay libros para cargar.
+                No hay libros para mostrar.
               </Alert>
             </div>
           ) : (
@@ -136,7 +135,7 @@ function Home() {
                   <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
                   <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>
                   <div className="flex justify-center">
-                    <Button className='mb-5' color='red' onClick={() => deleteBookCard(booksCard._id)}>Borrar</Button>
+                    <Button className='mb-5 z-[1]' color='red' onClick={() => deleteBookCard(booksCard._id)}>Confirmar devolución</Button>
                   </div>
                 </div>
               </div>

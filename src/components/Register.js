@@ -18,28 +18,26 @@ function Register() {
   const registerUser = async (e) => {
     e.preventDefault()
     const {firstName, lastName, course, phone, password, email} = data;
-    try{
-      const {data} = await axios.post('/api/users/register', {
+      await axios.post('/api/users/register', {
         firstName, lastName, course, phone, password, email
-      });
-      if(!data.valid)
-        toast.error(data.message)
-      else
-      {
-        setData({
-          firstName: '',
-          lastName: '',
-          course: '',
-          phone: '',
-          password: '',
-          email: ''
-        });
-        toast.success('Register complete! Welcome to BiblioETec');
-        navigate("/login")
-      }
-    } catch(error){
-      
-    }
+      })
+      .then((res) => {
+        if(!res.data.valid)
+          toast.error(res.data.message)
+        else
+        {
+          setData({
+            firstName: '',
+            lastName: '',
+            course: '',
+            phone: '',
+            password: '',
+            email: ''
+          });
+          toast.success('Register complete! Welcome to BiblioETec');
+          navigate("/login")
+        }
+      })
   }
 
   return (

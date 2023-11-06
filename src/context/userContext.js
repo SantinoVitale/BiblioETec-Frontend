@@ -14,8 +14,11 @@ export function UserContextProvider({children}){
       axios.get("/api/users/getUser").then((data) => {
         if(!data.data.valid)
         {
-          toast.error("Not logged, please log in")
-          navigate("/login")
+          if(window.location.pathname !== "/register")
+            navigate("/login");
+
+          toast.error("Not logged, please log in");
+          setUser(null);
         }
         else
           setUser(data.data.payload)

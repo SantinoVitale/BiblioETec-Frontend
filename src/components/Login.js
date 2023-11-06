@@ -1,11 +1,13 @@
 import { Card, CardHeader, CardBody, CardFooter, Typography, Input, Button } from "@material-tailwind/react";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from 'react-hot-toast'
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext)
   const [data, setData] = useState({
     email: '',
     password: ''
@@ -20,9 +22,14 @@ function Login() {
         email,
         password
       })
-      .then(() => 
+      .then((res) => 
       {
         toast.success("Logged successfully! Welcome to BiblioETec");
+        const newUser = {
+          ...res.data.payload,
+          id: res.data.payload._id
+        }
+        setUser(newUser)
         setData({});
         navigate("/");
       })
