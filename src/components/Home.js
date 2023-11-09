@@ -5,8 +5,10 @@ import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 import { Button, Alert, Spinner  } from "@material-tailwind/react";
 import moment from "moment-timezone";
+import { UserContext } from "../context/userContext"
 
 function Home() {
+  const {user} = useContext(UserContext)
   const [list, setList] = useState([])
   const [cardBooksWithExpiredDelivery, setCardBooksWithExpiredDelivery] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
@@ -62,7 +64,7 @@ function Home() {
       denyButtonText: `No`,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`/api/booksManager/${bid}`).then( () => {
+        await axios.delete(`/api/booksManager/${bid}`, {data: user}).then(() => {
           fetchData();
           Swal.fire('¡Devuelto!', 'Se confirmo la devolución con éxito', 'success');
         })
