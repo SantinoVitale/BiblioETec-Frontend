@@ -18,41 +18,57 @@ function Home() {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    await axios.get("/api/booksManager").then((res) => {
-      const bookCardsData = res.data.payload.booksCard.map((bookCard) => {
-        return {
-          ...bookCard,
-          expireDate: moment(bookCard.expireDate).format(),
-          retiredDate: moment(bookCard.retiredDate).format(),
-        };
-      });
-      const currentDateTime = moment().format();
-      const bookCardsConEntregaVencida = bookCardsData.filter((bookCard) => {
-        return moment(bookCard.expireDate).isBefore(currentDateTime);
-      });
-      if (bookCardsConEntregaVencida.length > 0) {
-        // Actualiza la lista de bookCards excluyendo los vencidos
-        const updatedList = bookCardsData.filter((bookCard) => {
-          return !bookCardsConEntregaVencida.some((vencido) => vencido._id === bookCard._id);
-        });
-        setList(updatedList);
-        setCardBooksWithExpiredDelivery(bookCardsConEntregaVencida);
-        setShowAlert(true);
-        setIsLoading(false);
-      } else {
-        if(bookCardsData.length===0){
-          setIsLoading(false);
-          setCardBooksWithExpiredDelivery([]);
-          setList([])
+  const fetchData = () => {
+    axios.get("/api/users/getUser")
+      .then((userRes) => {
+        const user = userRes.data.payload;
+  
+        if (user.role === "teacher") {
+          // Si el usuario es un profesor, obtén todos los bookCards
+          return axios.get("/api/booksManager")
+            .then((allBookCardsRes) => 
+              allBookCardsRes.data.payload.booksCard.map((bookCard) => ({
+              ...bookCard,
+              expireDate: moment(bookCard.expireDate).format(),
+              retiredDate: moment(bookCard.retiredDate).format(),
+            })));
+        } else {
+          // Si el usuario no es un profesor, obtén los bookCards relacionados con el usuario
+          return axios.get(`/api/booksManager/getByUser/${user.id}`)
+            .then((userBookCardsRes) => userBookCardsRes.data.payload.bookCard.map((bookCard) => ({
+              ...bookCard,
+              expireDate: moment(bookCard.expireDate).format(),
+              retiredDate: moment(bookCard.retiredDate).format(),
+            })));
         }
-        setCardBooksWithExpiredDelivery([]);
-        setList(bookCardsData)
-        setShowAlert(false);
-        setIsLoading(false);
-      }
-    })
-
+      })
+      .then((bookCardsData) => {
+        const currentDateTime = moment().format();
+        const bookCardsConEntregaVencida = bookCardsData.filter((bookCard) => moment(bookCard.expireDate).isBefore(currentDateTime));
+  
+        if (bookCardsConEntregaVencida.length > 0) {
+          const updatedList = bookCardsData.filter(
+            (bookCard) => !bookCardsConEntregaVencida.some((vencido) => vencido._id === bookCard._id)
+          );
+          setList(updatedList);
+          setCardBooksWithExpiredDelivery(bookCardsConEntregaVencida);
+          setShowAlert(true);
+          setIsLoading(false);
+        } else {
+          if (bookCardsData.length === 0) {
+            setIsLoading(false);
+            setCardBooksWithExpiredDelivery([]);
+            setList([]);
+          }
+          setCardBooksWithExpiredDelivery([]);
+          setList(bookCardsData);
+          setShowAlert(false);
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al obtener datos:", error);
+      });
   };
   
 
@@ -106,8 +122,10 @@ function Home() {
                           <p className="leading-relaxed mb-3 text-sm horario"> Fecha en la que se retiró: {format(new Date(booksCard.retiredDate), 'dd/MM/yyyy - HH:mm')} </p>
                           <p className="leading-relaxed mb-3 text-sm horario"> Fecha de vencimiento: {format(new Date(booksCard.expireDate), 'dd/MM/yyyy - HH:mm')} </p>
                           <div className="flex justify-center">
-                            <Button className='mb-5 p-[10px] m-[10px]' color='red' onClick={() => deleteBookCard(booksCard._id)}>Borrar</Button>
-                            <Button className='mb-5 p-[10px] m-[10px]' color='yellow'>Notificar alumno</Button>
+                            <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='red' onClick={() => deleteBookCard(booksCard._id)}>Confirmar devolución</Button>
+                            {user.role === "teacher" && (
+                              <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='yellow'>Notificar alumno</Button>
+                            )}
                           </div>
                         </div>
                       </div>

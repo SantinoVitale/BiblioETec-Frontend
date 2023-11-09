@@ -30,7 +30,7 @@ function NavBar() {
             {user ? (
             <>
             <NavLink to="/form-books" className="text-white text-xl p-5">Retirar Libro</NavLink>
-            {user.role === "profesor" && (
+            {user.role === "teacher" && (
               <NavLink to="/book-manager" className="text-white text-xl p-5">Administrar Libros</NavLink>
             )}
               <Menu>
