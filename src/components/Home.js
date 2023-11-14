@@ -90,6 +90,20 @@ function Home() {
     });
   }
 
+  const notifyUser = async (user) => {
+    Swal.fire({
+      title: '¿De qué forma quiere notificar al usuario?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Email',
+      denyButtonText: 'SMS',
+      denyButtonColor: '#8ee5ee',
+      confirmButtonColor: '#ffcd38',
+    }).then(async (result)=> {
+      console.log(result);
+    })
+  }
+
   return (
     <div>
         <h1 className='text-center text-2xl p-10'>Retiro de libros</h1>
@@ -124,7 +138,7 @@ function Home() {
                           <div className="flex justify-center">
                             <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='red' onClick={() => deleteBookCard(booksCard._id)}>Confirmar devolución</Button>
                             {user.role === "teacher" && (
-                              <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='yellow'>Notificar alumno</Button>
+                              <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='yellow' onClick={() => notifyUser(user)}>Notificar alumno</Button>
                             )}
                           </div>
                         </div>
