@@ -74,7 +74,7 @@ function Home() {
 
   const deleteBookCard = async (bid) => {
     Swal.fire({
-      title: '¿Estás seguro de confirmar devolucón de esta tarjeta?',
+      title: '¿Estás seguro de confirmar devolución de esta tarjeta?',
       showDenyButton: true,
       confirmButtonText: 'Si',
       denyButtonText: `No`,
@@ -91,6 +91,7 @@ function Home() {
   }
 
   const notifyUser = async (user) => {
+    let body
     Swal.fire({
       title: '¿De qué forma quiere notificar al usuario?',
       showDenyButton: true,
@@ -100,7 +101,26 @@ function Home() {
       denyButtonColor: '#8ee5ee',
       confirmButtonColor: '#ffcd38',
     }).then(async (result)=> {
-      console.log(result);
+      if(result.isConfirmed)
+      {
+        body = {
+          user: user
+        }
+        await axios.post("/api/users/notify", body)
+        .then((res) => {
+          Swal.fire("Enviado!", "¡El usuario fue notificado via Email con éxito!", "success")
+        })
+      } else if(result.isDenied)
+      {
+        Swal.fire({
+          title: "SMS del usuario",
+          icon: "info",
+          text: `El numero de celular del usuario es: +54 ${user.phone}`
+        })
+      } else if(result.isDismissed)
+      {
+        Swal.fire('Cancelado', 'El usuario no fue notificado', 'info');
+      }
     })
   }
 
@@ -138,7 +158,7 @@ function Home() {
                           <div className="flex justify-center">
                             <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='red' onClick={() => deleteBookCard(booksCard._id)}>Confirmar devolución</Button>
                             {user.role === "teacher" && (
-                              <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='yellow' onClick={() => notifyUser(user)}>Notificar alumno</Button>
+                              <Button className='mb-5 p-[10px] m-[10px] z-[1]' color='yellow' onClick={() => notifyUser(booksCard.owner)}>Notificar alumno</Button>
                             )}
                           </div>
                         </div>

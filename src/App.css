@@ -66,6 +66,10 @@ Book stuff
   height: 600px;
 }
 
+.box-shadow{
+  box-shadow: 0 0 20px #aaa;
+}
+
 .expired{
   
   box-shadow: 0 0 20px #ff0000;

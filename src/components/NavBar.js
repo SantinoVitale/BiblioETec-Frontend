@@ -25,7 +25,7 @@ function NavBar() {
   return (
     
     <div className="bg-gradient-to-r from-purple-800 to-indigo-800 h-20 flex items-center justify-between">
-        <NavLink to="/" className="text-white text-3xl font-semibold p-5">BiblioETec</NavLink>
+        <NavLink to="/" className="text-white text-3xl font-semibold p-5">Wisibilizalas</NavLink>
         <div>
             {user ? (
             <>
