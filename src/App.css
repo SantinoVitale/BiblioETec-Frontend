@@ -170,3 +170,7 @@ star animation
 /***********************************
 zoom on click
 ***********************************/
+
+.icon-father div {
+  width: auto;
+}
