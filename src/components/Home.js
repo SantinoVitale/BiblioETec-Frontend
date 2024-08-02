@@ -143,7 +143,7 @@ function Home() {
         <div id="list-th" className='books-manager-container'>
         <div className="col-md-10 mb-2 mt-4 expired-area">
               {showAlert && cardBooksWithExpiredDelivery.length > 0 && (
-                <div className="alert alert-danger">
+                <div className="alert alert-danger flex flex-col items-center">
                   <Alert icon={<i className="bi bi-exclamation-triangle-fill"></i>} variant='ghost' color="amber">La hora de entrega ha pasado para las siguientes tarjetas:</Alert>
                     {cardBooksWithExpiredDelivery.map((booksCard) => (
                       <div className="book expired read" key={booksCard._id}>
@@ -168,7 +168,7 @@ function Home() {
             )}
           </div>
         <div className="cardBooks-area">
-        {!isLoading && (
+        {!isLoading && cardBooksWithExpiredDelivery.length == 0 &&(
         <div>
           {list.length === 0 ? (
             <div className="alert alert-info mt-10">
