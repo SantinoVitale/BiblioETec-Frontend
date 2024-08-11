@@ -11,18 +11,20 @@ export function UserContextProvider({children}){
 
   useEffect(() => {
     if(!user){
-      axios.get("/api/users/getUser").then((data) => {
-        if(!data.data.valid)
-        {
-          if(window.location.pathname !== "/register")
-            navigate("/login");
-
-          toast.error("Not logged, please log in");
-          setUser(null);
-        }
-        else
-          setUser(data.data.payload)
-      })
+      if(window.location.pathname !== "/recover-pass"){
+        axios.get("/api/users/getUser").then((data) => {
+          if(!data.data.valid)
+          {
+            if(window.location.pathname !== "/register")
+              navigate("/login");
+  
+            toast.error("Not logged, please log in");
+            setUser(null);
+          }
+          else
+            setUser(data.data.payload)
+        })
+      }
     }
   },[])
 

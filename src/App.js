@@ -8,6 +8,7 @@ import Register from './components/Register';
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from './context/userContext';
+import Recover from './components/Recover';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.withCredentials = true;
@@ -23,6 +24,7 @@ function App() {
             <Route path='/form-books' element={<FormBook/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
+            <Route path='/recover-pass' element={<Recover/>}/>
           </Route>
         </Routes>
       </UserContextProvider>

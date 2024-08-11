@@ -5,23 +5,32 @@ import {
   CardFooter,
   Typography,
   Input,
-  Button
+  Button,
 } from "@material-tailwind/react";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import Swal from "sweetalert2";
 
-function Login() {
+function Recover() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
+  const [searchParams] = useSearchParams();
   const [value, setValue] = useState("@alumno.etec.um.edu.ar");
+  const code = searchParams.get("code");
+  const email = searchParams.get("email");
   const [data, setData] = useState({
     email: "",
     password: "",
+    code: code
   });
+  
+
+  useEffect(() => {
+    getMail();
+  }, []);
   /*
   ! Ver si se implementa luego 
   const [showPassword, setShowPassword] = useState(false);
@@ -31,66 +40,46 @@ function Login() {
   };
   */
 
-  const loginUser = async (e) => {
+  const getMail = async () => {
+    await axios
+    .post("/api/users/recoverPass/getMail", {
+      email: email,
+      code: code
+    })
+    .then((res) => {
+      if(res){
+        toast.success("Codigo no está vencido")
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+      toast.error("Codigo está vencido")
+      toast.error(err.response?.data?.message || "Error al obtener el correo")
+    })
+  }
+
+  const changePass = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
+    console.log(data);
+    
+    const { email, password, code } = data;
     try {
-      await axios
-        .post("/api/users/login", {
-          email: email + value,
-          password,
-        })
-        .then((res) => {
-          toast.success("Logged successfully! Welcome to BiblioETec");
-          const newUser = {
-            ...res.data.payload,
-            id: res.data.payload._id,
-          };
-          setUser(newUser);
-          setData({});
-          navigate("/");
-        });
-    } catch (error) {
-      toast.error(error.response.data.message);
+      axios
+      .post("/api/users/recoverPass/changePass", {
+        email: email,
+        password: password,
+        code: code
+      })
+      .then((res) => {
+        if(res){
+          toast.success("Contraseña cambiada con éxito");
+          navigate("/login");
+        }
+      })
+    } catch (err) {
+      toast.error(err.response.data.message || "Hubo un error al cambiar la contraseña")
     }
   };
-
-  const recoverPass = async (e) => {
-    e.preventDefault()
-    Swal.fire({
-      title: "Ingrese su Email para recuperar contraseña",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off"
-      },
-      showCancelButton: true,
-      confirmButtonText: "Look up",
-      showLoaderOnConfirm: true,
-      }).then(async (result) => {
-      if (result.isConfirmed) {
-        const email = result.value
-      try {
-        await axios
-          .post("/api/users/recoverPass", {
-            email
-          })
-          .then((res) => {
-            console.log(res);
-            
-            Swal.fire({
-              icon: 'info',
-              title: 'Recuperación de contraseña',
-              text: 'Por favor, revise su Email para poder recuperar su contraseña',
-            })
-          })
-      }
-      catch(error){
-        toast.error(error.response.data.message)
-      }
-        }
-      });
-    
-  }
 
   return (
     <div className="flex justify-center items-center m-[100px]">
@@ -101,10 +90,10 @@ function Login() {
           className="mb-4 grid h-28 place-items-center"
         >
           <Typography variant="h3" color="white">
-            Ingresar
+            Recuperar contraseña
           </Typography>
         </CardHeader>
-        <form onSubmit={loginUser}>
+        <form onSubmit={changePass}>
           <CardBody className="flex flex-col gap-4">
             <div className="inline-flex items- w-full">
               <Input
@@ -131,41 +120,28 @@ function Login() {
               <Input
                 variant="standard"
                 className="w-full"
-                label="Contraseña"
+                label="Nueva contraseña"
                 type="password"
                 containerProps={{ className: "min-w-0 icon-father" }}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
               />
             </div>
+            <div className="inline-flex items- w-full">
+              <Input
+                variant="standard"
+                className="w-full"
+                label="Código"
+                type="text"
+                value={code}
+                containerProps={{ className: "min-w-0 icon-father" }}
+                onChange={(e) => setData({ ...data, code: e.target.value })}
+              />
+            </div>
           </CardBody>
           <CardFooter className="pt-0">
             <Button variant="gradient" color="blue" fullWidth type="submit">
-              Ingresar
+              Cambiar contraseña
             </Button>
-            <Typography variant="small" className="mt-6 flex justify-center">
-              ¿No tienes cuenta?
-              <Typography
-                as="a"
-                href="/register"
-                variant="small"
-                color="blue-gray"
-                className="ml-1 font-bold"
-              >
-                Registrarse
-              </Typography>
-            </Typography>
-            <Typography variant="small" className="mt-6 flex justify-center">
-              ¿Te olvidaste la contraseña?
-              <Typography
-                as="button"
-                variant="small"
-                color="blue-gray"
-                className="ml-1 font-bold"
-                onClick={recoverPass}
-              >
-                Recuperar
-              </Typography>
-            </Typography>
           </CardFooter>
         </form>
       </Card>
@@ -173,4 +149,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Recover;
