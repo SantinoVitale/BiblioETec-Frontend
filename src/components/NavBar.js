@@ -14,9 +14,9 @@ function NavBar() {
     await axios.get("/api/users/logout")
     .then((res) => {
       if(!res.data.valid)
-        toast.error("something went wrong");
+        toast.error("Algo salió mal a la hora de cerrar sesión");
 
-      toast.success("Logout succesfully, see you later!");
+      toast.success("Cerrado de sesión exitoso ¡Hasta luego!");
       navigate("/login");
       setUser(null)
     })

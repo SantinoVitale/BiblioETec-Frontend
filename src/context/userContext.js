@@ -11,14 +11,14 @@ export function UserContextProvider({children}){
 
   useEffect(() => {
     if(!user){
-      if(window.location.pathname !== "/recover-pass"){
+      if(window.location.pathname === "/" || window.location.pathname === "/form-books"){
         axios.get("/api/users/getUser").then((data) => {
           if(!data.data.valid)
           {
             if(window.location.pathname !== "/register")
               navigate("/login");
   
-            toast.error("Not logged, please log in");
+            toast.error("Acceso No Autorizado, necesita estar logueado");
             setUser(null);
           }
           else

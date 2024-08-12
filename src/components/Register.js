@@ -65,9 +65,8 @@ function Register() {
             phone: "",
             password: "",
             email: "",
-          });
-          toast.success("Register complete! Welcome to BiblioETec");
-          navigate("/login");
+          });          
+          toast.success(res.data.message);
         }
       });
   };
@@ -133,6 +132,7 @@ function Register() {
                   <select className="border-white border-solid border focus:outline-gray-400" onChange={(val) => setValue(val.target.value)}>
                     <option value="@alumno.etec.um.edu.ar">@alumno.etec.um.edu.ar</option>
                     <option value="@etec.um.edu.ar">@etec.um.edu.ar</option>
+                    <option value="@alumno.um.edu.ar">@alumno.um.edu.ar</option>
                   </select>
                 }
                 autoComplete="email"

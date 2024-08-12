@@ -41,7 +41,7 @@ function Login() {
           password,
         })
         .then((res) => {
-          toast.success("Logged successfully! Welcome to BiblioETec");
+          toast.success("Inicio de Sesión correcto, bienvenido a la BiblioETec");
           const newUser = {
             ...res.data.payload,
             id: res.data.payload._id,
@@ -121,6 +121,7 @@ function Login() {
                       @alumno.etec.um.edu.ar
                     </option>
                     <option value="@etec.um.edu.ar">@etec.um.edu.ar</option>
+                    <option value="@alumno.um.edu.ar">@alumno.um.edu.ar</option>
                   </select>
                 }
                 autoComplete="email"

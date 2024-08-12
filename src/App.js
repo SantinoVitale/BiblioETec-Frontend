@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from './context/userContext';
 import Recover from './components/Recover';
+import EmailVerify from './components/EmailVerify';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.withCredentials = true;
@@ -25,6 +26,7 @@ function App() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
             <Route path='/recover-pass' element={<Recover/>}/>
+            <Route path='/users/:id/verify/:token' element={<EmailVerify/>}/>
           </Route>
         </Routes>
       </UserContextProvider>
