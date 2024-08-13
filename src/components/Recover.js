@@ -63,7 +63,8 @@ function Recover() {
     console.log(data);
 
     const { email, password, code } = data;
-      await axios.post("/api/users/recoverPass/changePass", {
+    await axios
+      .post("/api/users/recoverPass/changePass", {
         email: email + value,
         password: password,
         code: code,
@@ -75,7 +76,7 @@ function Recover() {
         }
       })
       .catch((err) => {
-        toast.error(err.response.data.message)
+        toast.error(err.response.data.message);
       });
   };
 

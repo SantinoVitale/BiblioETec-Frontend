@@ -1,5 +1,5 @@
 import { Typography } from "@material-tailwind/react";
- 
+
 function Footer() {
   return (
     <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between">

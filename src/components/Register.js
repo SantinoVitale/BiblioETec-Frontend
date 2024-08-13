@@ -40,7 +40,7 @@ function Register() {
   const registerUser = async (e) => {
     e.preventDefault();
     const { firstName, lastName, course, phone, password } = data;
-    const email = data.email + value
+    const email = data.email + value;
 
     if (phone.length !== 10) {
       toast.error("El número de teléfono debe tener 10 dígitos");
@@ -65,7 +65,7 @@ function Register() {
             phone: "",
             password: "",
             email: "",
-          });          
+          });
           toast.success(res.data.message);
         }
       });
@@ -129,8 +129,13 @@ function Register() {
                 type="text"
                 containerProps={{ className: "min-w-0 icon-father" }}
                 icon={
-                  <select className="border-white border-solid border focus:outline-gray-400" onChange={(val) => setValue(val.target.value)}>
-                    <option value="@alumno.etec.um.edu.ar">@alumno.etec.um.edu.ar</option>
+                  <select
+                    className="border-white border-solid border focus:outline-gray-400"
+                    onChange={(val) => setValue(val.target.value)}
+                  >
+                    <option value="@alumno.etec.um.edu.ar">
+                      @alumno.etec.um.edu.ar
+                    </option>
                     <option value="@etec.um.edu.ar">@etec.um.edu.ar</option>
                     <option value="@alumno.um.edu.ar">@alumno.um.edu.ar</option>
                   </select>

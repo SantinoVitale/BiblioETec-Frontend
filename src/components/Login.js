@@ -5,7 +5,7 @@ import {
   CardFooter,
   Typography,
   Input,
-  Button
+  Button,
 } from "@material-tailwind/react";
 import axios from "axios";
 import { useContext, useState } from "react";
@@ -41,7 +41,9 @@ function Login() {
           password,
         })
         .then((res) => {
-          toast.success("Inicio de Sesión correcto, bienvenido a la BiblioETec");
+          toast.success(
+            "Inicio de Sesión correcto, bienvenido a la BiblioETec"
+          );
           const newUser = {
             ...res.data.payload,
             id: res.data.payload._id,
@@ -56,41 +58,39 @@ function Login() {
   };
 
   const recoverPass = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     Swal.fire({
       title: "Ingrese su Email para recuperar contraseña",
       input: "text",
       inputAttributes: {
-        autocapitalize: "off"
+        autocapitalize: "off",
       },
       showCancelButton: true,
       confirmButtonText: "Look up",
       showLoaderOnConfirm: true,
-      }).then(async (result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        const email = result.value
-      try {
-        await axios
-          .post("/api/users/recoverPass", {
-            email
-          })
-          .then((res) => {
-            console.log(res);
-            
-            Swal.fire({
-              icon: 'info',
-              title: 'Recuperación de contraseña',
-              text: 'Por favor, revise su Email para poder recuperar su contraseña',
+        const email = result.value;
+        try {
+          await axios
+            .post("/api/users/recoverPass", {
+              email,
             })
-          })
-      }
-      catch(error){
-        toast.error(error.response.data.message)
-      }
+            .then((res) => {
+              console.log(res);
+
+              Swal.fire({
+                icon: "info",
+                title: "Recuperación de contraseña",
+                text: "Por favor, revise su Email para poder recuperar su contraseña",
+              });
+            });
+        } catch (error) {
+          toast.error(error.response.data.message);
         }
-      });
-    
-  }
+      }
+    });
+  };
 
   return (
     <div className="flex justify-center items-center m-[100px]">
@@ -116,7 +116,10 @@ function Login() {
                 type="text"
                 containerProps={{ className: "min-w-0 icon-father" }}
                 icon={
-                  <select className="border-white border-solid border focus:outline-gray-400" onChange={(val) => setValue(val.target.value)}>
+                  <select
+                    className="border-white border-solid border focus:outline-gray-400"
+                    onChange={(val) => setValue(val.target.value)}
+                  >
                     <option value="@alumno.etec.um.edu.ar">
                       @alumno.etec.um.edu.ar
                     </option>

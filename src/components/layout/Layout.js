@@ -6,9 +6,9 @@ function Layout() {
   return (
     <>
       <div className="w-full layout">
-        <NavBar/>
+        <NavBar />
         <Outlet />
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
