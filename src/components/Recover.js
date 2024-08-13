@@ -16,7 +16,6 @@ import Swal from "sweetalert2";
 
 function Recover() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
   const [searchParams] = useSearchParams();
   const [value, setValue] = useState("@alumno.etec.um.edu.ar");
   const code = searchParams.get("code");
@@ -24,9 +23,8 @@ function Recover() {
   const [data, setData] = useState({
     email: "",
     password: "",
-    code: code
+    code: code,
   });
-  
 
   useEffect(() => {
     getMail();
@@ -42,43 +40,43 @@ function Recover() {
 
   const getMail = async () => {
     await axios
-    .post("/api/users/recoverPass/getMail", {
-      email: email,
-      code: code
-    })
-    .then((res) => {
-      if(res){
-        toast.success("Codigo no está vencido")
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-      toast.error("Codigo está vencido")
-      toast.error(err.response?.data?.message || "Error al obtener el correo")
-    })
-  }
+      .post("/api/users/recoverPass/getMail", {
+        email: email,
+        code: code,
+      })
+      .then((res) => {
+        if (res) {
+          toast.success("Codigo no está vencido");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Codigo está vencido");
+        toast.error(
+          err.response?.data?.message || "Error al obtener el correo"
+        );
+      });
+  };
 
   const changePass = async (e) => {
     e.preventDefault();
     console.log(data);
-    
+
     const { email, password, code } = data;
-    try {
-      axios
-      .post("/api/users/recoverPass/changePass", {
-        email: email,
+      await axios.post("/api/users/recoverPass/changePass", {
+        email: email + value,
         password: password,
-        code: code
+        code: code,
       })
       .then((res) => {
-        if(res){
+        if (res) {
           toast.success("Contraseña cambiada con éxito");
           navigate("/login");
         }
       })
-    } catch (err) {
-      toast.error(err.response.data.message || "Hubo un error al cambiar la contraseña")
-    }
+      .catch((err) => {
+        toast.error(err.response.data.message)
+      });
   };
 
   return (
@@ -105,11 +103,15 @@ function Recover() {
                 type="text"
                 containerProps={{ className: "min-w-0 icon-father" }}
                 icon={
-                  <select className="border-white border-solid border focus:outline-gray-400" onChange={(val) => setValue(val.target.value)}>
+                  <select
+                    className="border-white border-solid border focus:outline-gray-400"
+                    onChange={(val) => setValue(val.target.value)}
+                  >
                     <option value="@alumno.etec.um.edu.ar">
                       @alumno.etec.um.edu.ar
                     </option>
                     <option value="@etec.um.edu.ar">@etec.um.edu.ar</option>
+                    <option value="@alumno.um.edu.ar">@alumno.um.edu.ar</option>
                   </select>
                 }
                 autoComplete="email"
