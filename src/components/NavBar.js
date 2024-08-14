@@ -40,7 +40,7 @@ function NavBar() {
               Retirar Libro
             </NavLink>
             {user.role === "teacher" && (
-              <NavLink to="/book-manager" className="text-white text-xl p-5">
+              <NavLink to="/books-manager" className="text-white text-xl p-5">
                 Administrar Libros
               </NavLink>
             )}
