@@ -18,7 +18,6 @@ import toast from "react-hot-toast";
 
 const BooksManager = () => {
   const [dataBooks, setDataBooks] = useState([]);
-  const [bookId, setBookId] = useState("")
   const [createData, setCreateData] = useState({
     title: "",
     author: "",
@@ -37,7 +36,7 @@ const BooksManager = () => {
   })
 
   useEffect(() => {
-    const getBooks = axios.get("/api/books")
+    axios.get("/api/books")
     .then((res) => {
       const data = res.data.payload.books;
       setDataBooks(data)
@@ -50,7 +49,6 @@ const BooksManager = () => {
   }, [])
 
   const handleIdBooks = (e, crud) => {
-    setBookId(e)
     if(crud === "update") {
       setUpdateData({...updateData, id: e})
     } else if (crud === "delete"){
@@ -315,7 +313,6 @@ const BooksManager = () => {
             </Card>
     }
   ]
-  const [books, setBook] = useState("");
 
   return (
     <div className="bg-gradient-to-r from-gray-500 via-white to-gray-500 p-10">
