@@ -50,21 +50,17 @@ function NavBar() {
                   variant="circular"
                   className="cursor-pointer mr-5"
                   alt="Avatar"
-                  src="./img/user.png"
+                  src="../img/user.png"
                 />
               </MenuHandler>
               <MenuList>
                 <MenuItem className="flex items-center gap-2">
-                  <i className="bi bi-person-fill"></i>
-                  <Typography variant="small" className="font-medium">
-                    Mi perfil
-                  </Typography>
-                </MenuItem>
-                <MenuItem className="flex items-center gap-2">
-                  <i className="bi bi-gear-fill"></i>
-                  <Typography variant="small" className="font-medium">
-                    Editar perfil
-                  </Typography>
+                  <NavLink to={`/profile/${user.id}`} className="flex items-center">
+                    <i className="bi bi-person-fill mr-2"></i>
+                    <Typography variant="small" className="font-medium">
+                      Mi perfil
+                    </Typography>
+                  </NavLink>
                 </MenuItem>
                 <hr className="my-2 border-blue-gray-50" />
                 <MenuItem className="flex items-center gap-2 ">

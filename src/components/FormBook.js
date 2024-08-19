@@ -96,7 +96,7 @@ function FormBook() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredBooks.map((book) => (
-                  <Card key={book._id} className="w-[250px] box-shadow p-6">
+                  <Card key={book._id} className="w-[250px] box-shadow shadow-2xl p-6">
                     <Typography variant="h6" color="blue-gray" className="mb-2">
                       {book.title}
                     </Typography>

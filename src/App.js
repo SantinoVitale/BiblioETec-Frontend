@@ -11,6 +11,7 @@ import { UserContextProvider } from './context/userContext';
 import Recover from './components/Recover';
 import EmailVerify from './components/EmailVerify';
 import BooksManager from './components/BooksManager';
+import Profile from './components/Profile';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.withCredentials = true;
@@ -29,6 +30,7 @@ function App() {
             <Route path='/recover-pass' element={<Recover/>}/>
             <Route path='/users/:id/verify/:token' element={<EmailVerify/>}/>
             <Route path='/books-manager' element={<BooksManager/>} />
+            <Route path='/profile/:id' element={<Profile/>} />
           </Route>
         </Routes>
       </UserContextProvider>
