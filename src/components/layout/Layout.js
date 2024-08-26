@@ -5,7 +5,7 @@ import Footer from "../Footer.js";
 function Layout() {
   return (
     <>
-      <div className="w-full layout">
+      <div className="w-full bg-gradient-to-l from-[#4982DB] to-[#86A8CD] layout">
         <NavBar />
         <Outlet />
         <Footer />

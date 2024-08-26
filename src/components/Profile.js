@@ -24,10 +24,10 @@ const Profile = () => {
   }  
 
   return (
-    <div className="bg-gradient-to-r from-gray-500 via-white to-gray-500 p-10">
+    <div className="p-10">
       {userLoading ? <Spinner className="w-12 h-12" color="blue"></Spinner> : user ? 
       <div className="flex flex-col items-center">
-        <h1 className="text-black pb-10">Perfil de {user.firstName} {user.lastName}</h1>
+        <h1 className="text-white text-3xl pb-10">Perfil de {user.firstName} {user.lastName}</h1>
         <form onSubmit={editProfile}>
           <Card className="w-96">
             <CardBody className="flex flex-col gap-4">

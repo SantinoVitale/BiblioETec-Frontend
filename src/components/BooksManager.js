@@ -315,8 +315,8 @@ const BooksManager = () => {
   ]
 
   return (
-    <div className="bg-gradient-to-r from-gray-500 via-white to-gray-500 p-10">
-      <h1 className="text-bold text-black">Administración de Libros</h1>
+    <div className="p-10">
+      <h1 className="text-white font-bold text-3xl">Administración de Libros</h1>
       <div className="p-10">
       <Tabs value="dashboard">
         <TabsHeader>

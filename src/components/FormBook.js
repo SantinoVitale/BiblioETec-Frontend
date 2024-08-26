@@ -62,20 +62,21 @@ function FormBook() {
   return (
     <div className="flex justify-center items-center m-[100px]">
       <Card color="transparent" shadow={false}>
-        <Typography variant="h4" color="blue-gray">
+        <Typography variant="h4" className="text-white" color="blue-gray">
           Formulario para retirar libro
         </Typography>
-        <Typography color="gray" className="mt-1 font-normal">
+        <Typography color="white" className="mt-1 font-normal">
           Ingrese los datos para retirar el libro.
         </Typography>
         <form className="mt-8 mb-2 w-80 max-w-screen-lg w-[1000px]">
           <div className="mb-4 flex flex-col gap-6">
             <div className="mb-4 flex flex-col gap-6">
-              <div className="flex w-72">
+              <div className="flex bg-white w-fit pt-5 rounded-md">
                 <div className="ml-5 mr-5 mb-5">
                   <Input
                     type="text"
                     label="Buscar libro"
+                    color="purple"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -84,7 +85,7 @@ function FormBook() {
                   <Select
                     label="Filtrar por Categoría"
                     onChange={(e) => handleFilterByCategory(e)}
-                    className=""
+                    color="purple"
                   >
                     {categories.map((category) => (
                       <Option key={category} value={category}>

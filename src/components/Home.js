@@ -141,11 +141,11 @@ function Home() {
 
   return (
     <div>
-      <h1 className="text-center text-2xl p-10">Retiro de libros</h1>
+      <h1 className="text-center text-white text-2xl p-10">Retiro de libros</h1>
       {isLoading && (
         <div className="flex text-center justify-center">
           <Spinner
-            color="blue"
+            color="white"
             size="lg"
             border="4px"
             className="m-16 h-24 w-24"
@@ -157,10 +157,10 @@ function Home() {
           <div className="flex flex-wrap justify-center">
             <div className="choose">
               <a href="#list-th">
-                <i className="bi bi-grid"></i>
+                <i className="bi bi-grid text-white"></i>
               </a>
               <a href="#large-th">
-                <i className="bi bi-layout-split"></i>
+                <i className="bi bi-layout-split text-white"></i>
               </a>
             </div>
           </div>
@@ -235,8 +235,8 @@ function Home() {
                     <div className="alert alert-info mt-10">
                       <Alert
                         icon={<i className="bi bi-info-circle-fill"></i>}
-                        variant="ghost"
-                        color="blue"
+                        variant="gradient"
+                        color="amber"
                       >
                         No hay libros para mostrar.
                       </Alert>
