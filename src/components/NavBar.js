@@ -5,7 +5,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { UserContext } from "../context/userContext";
 import {
-  Avatar,
   Menu,
   MenuHandler,
   MenuItem,
@@ -30,28 +29,29 @@ function NavBar() {
 
   return (
     <div className="bg-gradient-to-r from-purple-800 to-indigo-800 h-20 flex items-center justify-between">
-      <NavLink to="/" className="text-white text-3xl font-semibold p-5">
-        Wisibilizalas
-      </NavLink>
-      <div>
+      {(window.location.pathname === "/login" || window.location.pathname === "/register") ? (
+        <Typography color="white" className="text-white text-lg md:text-3xl font-semibold p-5">
+          Wisibilizalas
+        </Typography>
+      ) : (
+        <NavLink to="/" className="text-white text-lg md:text-3xl font-semibold p-5">
+          Wisibilizalas
+        </NavLink>
+      )}
+      <div className="flex items-center">
         {user ? (
           <>
-            <NavLink to="/form-books" className="text-white text-xl p-5">
+            <NavLink to="/form-books" className="text-white text-xs md:text-xl px-2 md:p-5">
               Retirar Libro
             </NavLink>
             {user.role === "teacher" && (
-              <NavLink to="/books-manager" className="text-white text-xl p-5">
+              <NavLink to="/books-manager" className="text-white text-xs md:text-xl px-2 md:p-5">
                 Administrar Libros
               </NavLink>
             )}
             <Menu>
               <MenuHandler>
-                <Avatar
-                  variant="circular"
-                  className="cursor-pointer mr-5"
-                  alt="Avatar"
-                  src="../img/user.png"
-                />
+                <i class="bi bi-person-circle text-white text-xl md:text-3xl px-3"></i>
               </MenuHandler>
               <MenuList>
                 <MenuItem className="flex items-center gap-2">
@@ -77,9 +77,7 @@ function NavBar() {
             </Menu>
           </>
         ) : (
-          <NavLink to="/login" className="text-white text-xl p-5">
-            Login
-          </NavLink>
+          <></>
         )}
       </div>
     </div>

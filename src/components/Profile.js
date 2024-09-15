@@ -29,7 +29,7 @@ const Profile = () => {
       <div className="flex flex-col items-center">
         <h1 className="text-white text-3xl pb-10">Perfil de {user.firstName} {user.lastName}</h1>
         <form onSubmit={editProfile}>
-          <Card className="w-96">
+          <Card className="md:w-96">
             <CardBody className="flex flex-col gap-4">
               <Input label="Nombre" defaultValue={user.firstName} variant="standard" size="lg" onChange={(e) => setUserData({...userData, firstName: e.target.value})} />
               <Input label="Apellido" defaultValue={user.lastName} variant="standard" size="lg" onChange={(e) => setUserData({...userData, lastName: e.target.value})} />

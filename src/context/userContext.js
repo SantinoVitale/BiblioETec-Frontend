@@ -26,7 +26,7 @@ export function UserContextProvider({children}){
             setUser(response.data.payload);
             setUserLoading(false);
             if(window.location.pathname === "/login") navigate("/")
-          } else {
+          } else{
             handleUnauthorized();
           }
         })
@@ -34,7 +34,7 @@ export function UserContextProvider({children}){
           console.error("Error al obtener el usuario:", error);
           handleUnauthorized();
         });
-    } else {
+    } else if(window.location.pathname !== "/register") {
       handleUnauthorized();
     }
   },[])

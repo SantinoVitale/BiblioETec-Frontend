@@ -40,9 +40,12 @@ footer {
 
 .books-manager-container{
   display: grid;
-  grid-template-areas: "expired cardBooks";
+  grid-template-areas: 
+    "expired" 
+    "cardBooks";
   flex-wrap: wrap;
   justify-content: center;
+  justify-items: center;
 }
 
 .expired-area{

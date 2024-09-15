@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
-import { Button, Alert, Spinner } from "@material-tailwind/react";
+import { Button, Alert, Spinner, Typography } from "@material-tailwind/react";
 import moment from "moment-timezone";
 import { UserContext } from "../context/userContext";
 
@@ -164,19 +164,19 @@ function Home() {
               </a>
             </div>
           </div>
-          <div id="list-th" className="books-manager-container">
+          <div id="list-th" className="books-manager-container mb-10">
             <div className="col-md-10 mb-2 mt-4 expired-area">
               {showAlert && cardBooksWithExpiredDelivery.length > 0 && (
-                <div className="alert alert-danger flex flex-col items-center">
+                <div className="alert alert-danger flex flex-col items-center m-5">
                   <Alert
                     icon={<i className="bi bi-exclamation-triangle-fill"></i>}
-                    variant="ghost"
+                    variant="gradient"
                     color="amber"
                   >
                     La hora de entrega ha pasado para las siguientes tarjetas:
                   </Alert>
                   {cardBooksWithExpiredDelivery.map((booksCard) => (
-                    <div className="book expired read" key={booksCard._id}>
+                    <div className="book expired read bg-white" key={booksCard._id}>
                       <div className="cover">
                         <img src={booksCard.books.img} alt="imagen Libro" />
                       </div>
@@ -229,8 +229,11 @@ function Home() {
               )}
             </div>
             <div className="cardBooks-area">
-              {!isLoading && cardBooksWithExpiredDelivery.length == 0 && (
+              {!isLoading && (
                 <div>
+                  <Typography color="white" variant="h3" className="text-center">
+                      Libros Retirados:
+                    </Typography>
                   {list.length === 0 ? (
                     <div className="alert alert-info mt-10">
                       <Alert
@@ -244,7 +247,7 @@ function Home() {
                   ) : (
                     // Renderiza el contenido de libros si la lista no está vacía
                     list.map((booksCard) => (
-                      <div className="book read" key={booksCard._id}>
+                      <div className="book read bg-white" key={booksCard._id}>
                         <div className="cover">
                           <img src={booksCard.books.img} alt="imagen Libro" />
                         </div>

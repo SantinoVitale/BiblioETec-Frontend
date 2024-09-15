@@ -103,11 +103,11 @@ function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center m-[100px]">
-      <Card className="w-96 shadow-2xl">
+    <div className="flex justify-center items-center mx-5 my-24 md:m-[100px]">
+      <Card className="shadow-2xl w-full md:w-96">
         <CardHeader
           variant="gradient"
-          color="blue"
+          color="deep-purple"
           className="mb-4 grid h-28 place-items-center"
         >
           <Typography variant="h3" color="white">
@@ -116,7 +116,7 @@ function Login() {
         </CardHeader>
         <form onSubmit={loginUser}>
           <CardBody className="flex flex-col gap-4">
-            <div className="inline-flex items- w-full">
+            <div className="inline-flex w-full">
               <Input
                 variant="standard"
                 aria-autocomplete="email"
@@ -127,7 +127,7 @@ function Login() {
                 containerProps={{ className: "min-w-0 icon-father" }}
                 icon={
                   <select
-                    className="border-white border-solid border focus:outline-gray-400"
+                    className="border-white border-solid border focus:outline-gray-400 justify-self-end text-xs md:text-base"
                     onChange={(val) => setValue(val.target.value)}
                   >
                     <option value="@alumno.etec.um.edu.ar">
@@ -153,7 +153,7 @@ function Login() {
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" color="blue" fullWidth type="submit">
+            <Button variant="gradient" color="deep-purple" fullWidth type="submit">
               Ingresar
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">

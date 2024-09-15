@@ -104,14 +104,14 @@ const BooksManager = () => {
       value: "create",
       icon: <i className="bi bi-journal-plus"></i>,
       form: 
-      <Card color="white" className="p-10" shadow={true}>
+      <Card color="white" className="p-10 w-fit" shadow={true}>
         <Typography variant="h4" color="blue-gray">
           Creación de libro
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
           Por favor, complete todos los campos para subir un nuevo libro.
         </Typography>
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={submitCreate}>
+        <form className="mt-8 mb-2 max-w-screen-lg" onSubmit={submitCreate}>
           <div className="mb-1 flex flex-col gap-6">
             <Input
               size="lg"
@@ -196,7 +196,7 @@ const BooksManager = () => {
               <Typography color="gray" className="mt-1 font-normal">
                 Por favor, complete todos los campos para actualizar el Libro
               </Typography>
-              <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={submitUpdate}>
+              <form className="mt-8 mb-2 max-w-screen-lg" onSubmit={submitUpdate}>
                 <div className="mb-1 flex flex-col gap-6">
                   <Select
                     label="Libro"
@@ -292,7 +292,7 @@ const BooksManager = () => {
               <Typography color="gray" className="mt-1 font-normal">
                 Por favor, complete todos los campos para eliminar el Libro
               </Typography>
-              <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={submitDelete}>
+              <form className="mt-8 mb-2 max-w-screen-lg" onSubmit={submitDelete}>
                 <div className="mb-1 flex flex-col gap-6">
                   <Select
                     label="Libro"
@@ -315,14 +315,14 @@ const BooksManager = () => {
   ]
 
   return (
-    <div className="p-10">
+    <div className="p-5 md:p-10">
       <h1 className="text-white font-bold text-3xl">Administración de Libros</h1>
-      <div className="p-10">
+      <div className="p-5 md:p-10">
       <Tabs value="dashboard">
         <TabsHeader>
           {data.map(({ label, value, icon }) => (
             <Tab key={value} value={value}>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-xs md:text-base">
                 {icon}
                 {label}
               </div>

@@ -72,11 +72,11 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center m-[100px]">
-      <Card className="w-96 shadow-2xl">
+    <div className="flex justify-center items-center mx-5 my-24 md:m-[100px]">
+      <Card className="w-full md:w-96 shadow-2xl">
         <CardHeader
           variant="gradient"
-          color="blue"
+          color="deep-purple"
           className="mb-4 grid h-28 place-items-center"
         >
           <Typography variant="h3" color="white">
@@ -130,7 +130,7 @@ function Register() {
                 containerProps={{ className: "min-w-0 icon-father" }}
                 icon={
                   <select
-                    className="border-white border-solid border focus:outline-gray-400"
+                    className="border-white border-solid border focus:outline-gray-400 justify-self-end text-xs md:text-base"
                     onChange={(val) => setValue(val.target.value)}
                   >
                     <option value="@alumno.etec.um.edu.ar">
@@ -156,7 +156,7 @@ function Register() {
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" color="blue" fullWidth type="submit">
+            <Button variant="gradient" color="deep-purple" fullWidth type="submit">
               Registrarse
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">

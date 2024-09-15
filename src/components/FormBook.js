@@ -68,10 +68,10 @@ function FormBook() {
         <Typography color="white" className="mt-1 font-normal">
           Ingrese los datos para retirar el libro.
         </Typography>
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg w-[1000px]">
+        <form className="mt-8 mb-2 max-w-screen-lg">
           <div className="mb-4 flex flex-col gap-6">
             <div className="mb-4 flex flex-col gap-6">
-              <div className="flex bg-white w-fit pt-5 rounded-md">
+              <div className="flex bg-white w-fit pt-5 rounded-md flex-col md:flex-row">
                 <div className="ml-5 mr-5 mb-5">
                   <Input
                     type="text"
