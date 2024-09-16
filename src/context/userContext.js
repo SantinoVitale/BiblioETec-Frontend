@@ -34,7 +34,7 @@ export function UserContextProvider({children}){
           if (response.data.valid) {
             setUser(response.data.payload);
             setUserLoading(false);
-            if(window.location.pathname === "/login") navigate("/")
+            if(window.location.pathname === "/login") navigate("/home")
           } else{
             handleUnauthorized();
           }

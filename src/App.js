@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate  } from 'react-router-dom';
 import Home from './components/Home';
 import Layout from './components/layout/Layout';
 import FormBook from './components/FormBook';
@@ -23,7 +23,8 @@ function App() {
         <Toaster position='bottom-right' toastOptions={{duration: 2000}}/>
         <Routes>
             <Route element={<Layout />}>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Navigate to="/login" />}/>
+            <Route path="/home" element={<Home/>}/>
             <Route path='/form-books' element={<FormBook/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>

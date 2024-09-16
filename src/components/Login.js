@@ -62,7 +62,7 @@ function Login() {
             course: newUser.course
           }));
           setData({});
-          navigate("/");
+          navigate("/home");
         });
     } catch (error) {
       toast.error(error.response.data.message);

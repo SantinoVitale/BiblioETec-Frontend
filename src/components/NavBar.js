@@ -38,7 +38,7 @@ function NavBar() {
           Wisibilizalas
         </Typography>
       ) : (
-        <NavLink to="/" className="text-white text-lg md:text-3xl font-semibold p-5">
+        <NavLink to="/home" className="text-white text-lg md:text-3xl font-semibold p-5">
           Wisibilizalas
         </NavLink>
       )}

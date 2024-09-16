@@ -40,7 +40,7 @@ function FormBook() {
           icon: "success",
           title: "¡Operacion exitosa!",
           text: "La carta del libro fue agregada de manera exitosa!",
-          footer: '<a href="/">Volver al inicio</a>',
+          footer: '<a href="/home">Volver al inicio</a>',
         });
       });
   };
