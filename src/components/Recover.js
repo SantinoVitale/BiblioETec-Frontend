@@ -48,7 +48,6 @@ function Recover() {
         }
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Codigo está vencido");
         toast.error(
           err.response?.data?.message || "Error al obtener el correo"
@@ -58,7 +57,6 @@ function Recover() {
 
   const changePass = async (e) => {
     e.preventDefault();
-    console.log(data);
 
     const { email, password, code } = data;
     await axios

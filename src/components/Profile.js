@@ -24,7 +24,6 @@ const Profile = () => {
     })
     .catch((err) => {
       toast.error(err.response.data.message);
-      console.log(err.response.data.error);
     })
     .finally(() => {
       setLoadingEdit(false);

@@ -91,7 +91,6 @@ function Login() {
               email,
             })
             .then((res) => {
-              console.log(res);
 
               Swal.fire({
                 icon: "info",

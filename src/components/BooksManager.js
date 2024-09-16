@@ -45,8 +45,7 @@ const BooksManager = () => {
       setDataBooks(data)
     })
     .catch((err) => {
-      toast.error("Hubo un problema a la hora de cargar los libros")
-      console.log(err);
+      toast.error("Hubo un problema a la hora de cargar los libros", err)
     })
 
   }, [])

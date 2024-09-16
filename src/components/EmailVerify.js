@@ -13,11 +13,9 @@ const EmailVerify = () => {
       await axios
         .get(`/api/users/${params.id}/verify/${params.token}`)
         .then((res) => {
-          console.log(res);
           setValidUrl(true);
         })
         .catch((err) => {
-          console.log(err);
           setValidUrl(false);
           setError(err.response.data.message);
         });
