@@ -13,7 +13,7 @@ import EmailVerify from './components/EmailVerify';
 import BooksManager from './components/BooksManager';
 import Profile from './components/Profile';
 
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'url'; // ! CAMBIAR URGENTE
 axios.defaults.withCredentials = true;
 
 function App() {
