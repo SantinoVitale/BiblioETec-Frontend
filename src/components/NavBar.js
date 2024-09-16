@@ -11,6 +11,8 @@ import {
   MenuList,
   Typography,
 } from "@material-tailwind/react";
+import Cookies from "js-cookie";
+
 
 function NavBar() {
   const { user, setUser } = useContext(UserContext);
@@ -22,6 +24,8 @@ function NavBar() {
         toast.error("Algo salió mal a la hora de cerrar sesión");
 
       toast.success("Cerrado de sesión exitoso ¡Hasta luego!");
+      Cookies.remove("token");
+      localStorage.removeItem("user");
       navigate("/login");
       setUser(null);
     });
@@ -44,7 +48,7 @@ function NavBar() {
             <NavLink to="/form-books" className="text-white text-xs md:text-xl px-2 md:p-5">
               Retirar Libro
             </NavLink>
-            {user.role === "teacher" && (
+            {user.role === "profesor" && (
               <NavLink to="/books-manager" className="text-white text-xs md:text-xl px-2 md:p-5">
                 Administrar Libros
               </NavLink>

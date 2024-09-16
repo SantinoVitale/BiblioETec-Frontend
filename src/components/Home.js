@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
-import { Button, Alert, Spinner, Typography } from "@material-tailwind/react";
+import { Button, Alert, Spinner } from "@material-tailwind/react";
 import moment from "moment-timezone";
 import { UserContext } from "../context/userContext";
 
@@ -25,7 +25,7 @@ function Home() {
       .then((userRes) => {
         const user = userRes.data.payload;
 
-        if (user.role === "teacher") {
+        if (user.role === "profesor") {
           // Si el usuario es un profesor, obtén todos los bookCards
           return axios.get("/api/booksManager").then((allBookCardsRes) =>
             allBookCardsRes.data.payload.booksCard.map((bookCard) => ({
@@ -212,7 +212,7 @@ function Home() {
                           >
                             Confirmar devolución
                           </Button>
-                          {user.role === "teacher" && (
+                          {user.role === "profesor" && (
                             <Button
                               className="mb-5 p-[10px] m-[10px] z-[1]"
                               color="yellow"
@@ -231,9 +231,7 @@ function Home() {
             <div className="cardBooks-area">
               {!isLoading && (
                 <div>
-                  <Typography color="white" variant="h3" className="text-center">
-                      Libros Retirados:
-                    </Typography>
+                  <h1 className="text-center text-white text-2xl">Libros no vencidos:</h1>
                   {list.length === 0 ? (
                     <div className="alert alert-info mt-10">
                       <Alert

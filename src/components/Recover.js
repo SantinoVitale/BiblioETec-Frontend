@@ -8,11 +8,9 @@ import {
   Button,
 } from "@material-tailwind/react";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { UserContext } from "../context/userContext";
-import Swal from "sweetalert2";
 
 function Recover() {
   const navigate = useNavigate();
@@ -28,7 +26,7 @@ function Recover() {
 
   useEffect(() => {
     getMail();
-  }, []);
+  });
   /*
   ! Ver si se implementa luego 
   const [showPassword, setShowPassword] = useState(false);
@@ -97,7 +95,6 @@ function Recover() {
             <div className="inline-flex items- w-full">
               <Input
                 variant="standard"
-                aria-autocomplete="email"
                 formNoValidate
                 className="w-full"
                 label="Email"

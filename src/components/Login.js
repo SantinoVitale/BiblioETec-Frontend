@@ -18,6 +18,7 @@ function Login() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const [value, setValue] = useState("@alumno.etec.um.edu.ar");
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -34,6 +35,7 @@ function Login() {
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = data;
+    setLoading(true);
     try {
       await axios
         .post("/api/users/login", {
@@ -64,6 +66,8 @@ function Login() {
         });
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,11 +123,11 @@ function Login() {
             <div className="inline-flex w-full">
               <Input
                 variant="standard"
-                aria-autocomplete="email"
                 formNoValidate
                 className="w-full"
                 label="Email"
                 type="text"
+                required
                 containerProps={{ className: "min-w-0 icon-father" }}
                 icon={
                   <select
@@ -147,14 +151,15 @@ function Login() {
                 className="w-full"
                 label="Contraseña"
                 type="password"
+                required
                 containerProps={{ className: "min-w-0 icon-father" }}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
               />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" color="deep-purple" fullWidth type="submit">
-              Ingresar
+            <Button variant="gradient" color="deep-purple" fullWidth type="submit" disabled={loading}>
+              {loading ? "Cargando..." : "Ingresar"}
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
               ¿No tienes cuenta?

@@ -34,6 +34,9 @@ const BooksManager = () => {
   const [deleteData, setDeleteData] = useState({
     id: ""
   })
+  const [loadingEdit, setLoadingEdit] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingCreate, setLoadingCreate] = useState(false);
 
   useEffect(() => {
     axios.get("/api/books")
@@ -58,19 +61,23 @@ const BooksManager = () => {
 
   const submitCreate = async (e) => {
     e.preventDefault();
+    setLoadingCreate(true);
     await axios.post("/api/books", createData)
     .then((res) => {
       if(res.data.valid)
-        toast.success("Libro creado con éxito")
+        toast.success("Libro creado con éxito");
     })
     .catch((err) => {
-      toast.error(err.response.data.message)
+      toast.error(err.response.data.message);
     })
-    console.log(createData);
+    .finally(() => {
+      setLoadingCreate(false);
+    })
   }
 
   const submitUpdate = async (e) => {
     e.preventDefault();
+    setLoadingEdit(true);
     await axios.put(`/api/books/${updateData.id}`, {
       title: updateData.title,
       author: updateData.author,
@@ -84,10 +91,14 @@ const BooksManager = () => {
     .catch((err) => {
       toast.error(err.response.data.message)
     })
+    .finally(() => {
+    setLoadingEdit(false);
+    })
   }
 
   const submitDelete = async (e) => {
     e.preventDefault();
+    setLoadingDelete(true);
     await axios.delete(`/api/books/${deleteData.id}`)
     .then((res) => {
       if(res.data.valid)
@@ -95,6 +106,9 @@ const BooksManager = () => {
     })
     .catch((err) => {
       toast.error(err.response.data.message)
+    })
+    .finally(() => {
+      setLoadingDelete(false)
     })
   }
 
@@ -119,6 +133,7 @@ const BooksManager = () => {
               onChange={(e) => setCreateData({...createData, title: e.target.value})}
               variant="standard"
               label="Título"
+              required
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -129,6 +144,7 @@ const BooksManager = () => {
               onChange={(e) => setCreateData({...createData, author: e.target.value})}
               variant="standard"
               label="Autor"
+              required
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -139,6 +155,7 @@ const BooksManager = () => {
               onChange={(e) => setCreateData({...createData, category: e.target.value})}
               label="Categoría"
               variant="standard"
+              required
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -149,6 +166,7 @@ const BooksManager = () => {
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               onChange={(e) => setCreateData({...createData, img: e.target.value})}
               label="Imagen"
+              required
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -179,8 +197,8 @@ const BooksManager = () => {
                 </Tooltip>}
             />
           </div>
-          <Button className="mt-6" color="blue" fullWidth type="submit">
-            Subir Libro
+          <Button className="mt-6" color="blue" fullWidth type="submit" disabled={loadingCreate}>
+            {loadingCreate ? "Cargando..." : "Subir Libro"}
           </Button>
         </form>
       </Card>
@@ -201,6 +219,7 @@ const BooksManager = () => {
                   <Select
                     label="Libro"
                     variant="standard"
+                    required
                     onChange={(e) => handleIdBooks(e, "update")}
                   >
                     {dataBooks.map((book) => (
@@ -275,8 +294,8 @@ const BooksManager = () => {
                     </Tooltip>}
                   />
                 </div>
-                <Button className="mt-6" color="blue" fullWidth type="submit">
-                  Actualizar Libro
+                <Button className="mt-6" color="blue" fullWidth type="submit" disabled={loadingEdit}>
+                  {loadingEdit ? "Cargando..." : "Actualizar Libro"}
                 </Button>
               </form>
             </Card>
@@ -297,6 +316,7 @@ const BooksManager = () => {
                   <Select
                     label="Libro"
                     variant="standard"
+                    required
                     onChange={(e) => handleIdBooks(e, "delete")}
                   >
                     {dataBooks.map((book) => (
@@ -306,8 +326,8 @@ const BooksManager = () => {
                     ))}
                   </Select>
                 </div>
-                <Button className="mt-6" color="blue" fullWidth type="submit">
-                  Eliminar Libro
+                <Button className="mt-6" color="blue" fullWidth type="submit" disabled={loadingDelete}>
+                  {loadingDelete ? "Cargando..." : "Eliminar Libro"}
                 </Button>
               </form>
             </Card>

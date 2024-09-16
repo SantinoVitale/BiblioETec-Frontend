@@ -1,27 +1,64 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Button, Card, CardBody, CardFooter, Input, Option, Select, Spinner } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 const Profile = () => {
-  const { user, userLoading } = useContext(UserContext);
+  const { user, userLoading, setUser } = useContext(UserContext);
   const [ userData, setUserData ] = useState({})
-  console.log(user);
-  
+  const navigate = useNavigate();
+  const [loadingEdit, setLoadingEdit] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   const editProfile = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setLoadingEdit(true);
     axios.put(`/api/users/edit/${user.id}`, userData)
     .then((res) => {
-      toast.success("Usuario actualizado con éxito")
+      toast.success("Usuario actualizado con éxito");
     })
     .catch((err) => {
-      toast.error(err.response.data.message)
+      toast.error(err.response.data.message);
       console.log(err.response.data.error);
     })
+    .finally(() => {
+      setLoadingEdit(false);
+    })
   }  
+
+  const deleteUser = () => {
+    setLoadingDelete(true);
+    Swal.fire({
+      title: "¿Estás seguro de eliminar su usuario?",
+      showDenyButton: true,
+      confirmButtonText: "Si",
+      denyButtonText: `No`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axios
+          .delete(`/api/users/delete/${user.id}`)
+          .then(() => {
+            Swal.fire(
+              "¡Eliminado!",
+              "Se eliminó el usuario con éxito",
+              "success"
+            );
+            setUser(null)
+            Cookies.remove("token"); 
+            navigate("/login")
+            setLoadingDelete(false);
+          });
+      } else if (result.isDenied) {
+        Swal.fire("Cancelado", "El usuario no fue eliminado", "info");
+        setLoadingDelete(false);
+      }
+    });
+  }
 
   return (
     <div className="p-10">
@@ -58,8 +95,11 @@ const Profile = () => {
               <Input label="Rol" defaultValue={user.role} variant="outlined" size="lg" disabled/>
             </CardBody>
             <CardFooter className="pt-0">
-              <Button variant="gradient" fullWidth type="submit">
-                Editar
+              <Button variant="gradient" fullWidth type="submit" disabled={loadingEdit}>
+                {loadingEdit ? "Cargando..." : "Editar Usuario"}
+              </Button>
+              <Button variant="gradient" className="my-5" fullWidth type="button" color="red" onClick={deleteUser} disabled={loadingDelete}>
+                {loadingDelete ? "Cargando..." : "Eliminar Usuario"}
               </Button>
             </CardFooter>
           </Card>

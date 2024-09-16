@@ -12,6 +12,15 @@ export function UserContextProvider({children}){
   const [userLoading, setUserLoading] = useState(false);
 
   useEffect(() => {
+    const handleUnauthorized = () => {
+      toast.error("Acceso no autorizado, necesita estar logueado");
+      setUser(null);
+      setUserLoading(false);
+      Cookies.remove("token"); // Eliminar el JWT de las cookies
+      localStorage.removeItem("user");
+      navigate("/login");
+    };
+    
     const token = Cookies.get("token");    
 
     if (token) {
@@ -37,15 +46,7 @@ export function UserContextProvider({children}){
     } else if(window.location.pathname !== "/register") {
       handleUnauthorized();
     }
-  },[])
-
-  const handleUnauthorized = () => {
-    toast.error("Acceso no autorizado, necesita estar logueado");
-    setUser(null);
-    setUserLoading(false);
-    Cookies.remove("token"); // Eliminar el JWT de las cookies
-    navigate("/login");
-  };
+  },[navigate])
 
   return (
     <UserContext.Provider value={{user, setUser, userLoading}}>

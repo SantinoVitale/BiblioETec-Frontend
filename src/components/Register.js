@@ -12,7 +12,6 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [data, setData] = useState({
@@ -24,7 +23,7 @@ function Register() {
     password: "",
   });
   const [value, setValue] = useState("@alumno.etec.um.edu.ar");
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   /*
   ! Ver si se implementa luego
@@ -41,6 +40,7 @@ function Register() {
     e.preventDefault();
     const { firstName, lastName, course, phone, password } = data;
     const email = data.email + value;
+    setLoading(true)
 
     if (phone.length !== 10) {
       toast.error("El número de teléfono debe tener 10 dígitos");
@@ -69,6 +69,7 @@ function Register() {
           toast.success(res.data.message);
         }
       });
+    setLoading(false)
   };
 
   return (
@@ -89,18 +90,21 @@ function Register() {
               variant="standard"
               label="Nombre"
               size="lg"
+              required
               onChange={(e) => setData({ ...data, firstName: e.target.value })}
             />
             <Input
               variant="standard"
               label="Apellido"
               size="lg"
+              required
               onChange={(e) => setData({ ...data, lastName: e.target.value })}
             />
             <Input
               variant="standard"
               label="Teléfono"
               size="lg"
+              required
               onChange={(e) => setData({ ...data, phone: e.target.value })}
             />
             <Select
@@ -127,6 +131,7 @@ function Register() {
                 className="w-full"
                 label="Email"
                 type="text"
+                required
                 containerProps={{ className: "min-w-0 icon-father" }}
                 icon={
                   <select
@@ -150,14 +155,15 @@ function Register() {
                 className="w-full"
                 label="Contraseña"
                 type="password"
+                required
                 containerProps={{ className: "min-w-0 icon-father" }}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
               />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" color="deep-purple" fullWidth type="submit">
-              Registrarse
+            <Button variant="gradient" color="deep-purple" fullWidth type="submit" disabled={loading}>
+            {loading ? "Cargando..." : "Registrarse"}
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
               ¿Ya tienes cuenta?
