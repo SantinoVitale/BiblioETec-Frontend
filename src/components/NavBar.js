@@ -35,11 +35,11 @@ function NavBar() {
     <div className="bg-gradient-to-r from-purple-800 to-indigo-800 h-20 flex items-center justify-between">
       {(window.location.pathname === "/login" || window.location.pathname === "/register") ? (
         <Typography color="white" className="text-white text-lg md:text-3xl font-semibold p-5">
-          Wisibilizalas
+          BiblioETec
         </Typography>
       ) : (
         <NavLink to="/home" className="text-white text-lg md:text-3xl font-semibold p-5">
-          Wisibilizalas
+          BiblioETec
         </NavLink>
       )}
       <div className="flex items-center">
