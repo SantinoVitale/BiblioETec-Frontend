@@ -44,6 +44,7 @@ function Register() {
 
     if (phone.length !== 10) {
       toast.error("El número de teléfono debe tener 10 dígitos");
+      setLoading(false);
       return;
     }
     await axios
@@ -56,7 +57,7 @@ function Register() {
         email,
       })
       .then((res) => {
-        if (!res.data.valid) toast.error(res.data.message);
+        if (!res.data.valid) return toast.error(res.data.message);
         else {
           setData({
             firstName: "",
@@ -68,8 +69,10 @@ function Register() {
           });
           toast.success(res.data.message);
         }
+      })
+      .finally(() => {
+        setLoading(false)
       });
-    setLoading(false)
   };
 
   return (
