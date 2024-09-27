@@ -82,7 +82,7 @@ function Recover() {
   };
 
   return (
-    <div className="flex justify-center items-center m-[100px]">
+    <div className="flex justify-center items-center mx-5 my-24 md:m-[100px]">
       <Card className="w-96 shadow-2xl">
         <CardHeader
           variant="gradient"

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { Button, Alert, Spinner } from "@material-tailwind/react";
 import moment from "moment-timezone";
 import { UserContext } from "../context/userContext";
+import { Link } from "react-router-dom";
 
 function Home() {
   const { user } = useContext(UserContext);
@@ -233,7 +234,7 @@ function Home() {
                 <div>
                   <h1 className="text-center text-white text-2xl">Libros no vencidos:</h1>
                   {list.length === 0 ? (
-                    <div className="alert alert-info mt-10">
+                    <div className="alert alert-info mt-10 flex items-center justify-center flex-col">
                       <Alert
                         icon={<i className="bi bi-info-circle-fill"></i>}
                         variant="gradient"
@@ -241,6 +242,7 @@ function Home() {
                       >
                         No hay libros para mostrar.
                       </Alert>
+                      <Link className="text-center text-white p-5 w-full text-2xl" to={"/form-books"}>Retirar Libros</Link>
                     </div>
                   ) : (
                     // Renderiza el contenido de libros si la lista no está vacía
