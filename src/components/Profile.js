@@ -20,7 +20,15 @@ const Profile = () => {
     setLoadingEdit(true);
     axios.put(`/api/users/edit/${user.id}`, userData)
     .then((res) => {
-      toast.success("Usuario actualizado con éxito");
+      axios.get(`/api/users/${user.id}`)
+      .then((res) => {
+        const newUser = {
+          ...res.data.payload,
+          id: res.data.payload._id,
+        };
+        setUser(newUser);
+        toast.success("Usuario actualizado con éxito");
+      })
     })
     .catch((err) => {
       toast.error(err.response.data.message);

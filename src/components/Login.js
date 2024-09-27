@@ -51,16 +51,6 @@ function Login() {
             id: res.data.payload._id,
           };
           setUser(newUser);
-          localStorage.setItem("user", JSON.stringify({
-            id: newUser.id,
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            role: newUser.role,
-            newUser: newUser.course,
-            phone: newUser.phone,
-            email: newUser.email,
-            course: newUser.course
-          }));
           setData({});
           navigate("/home");
         });
@@ -80,7 +70,7 @@ function Login() {
         autocapitalize: "off",
       },
       showCancelButton: true,
-      confirmButtonText: "Look up",
+      confirmButtonText: "Mandar Mail",
       showLoaderOnConfirm: true,
     }).then(async (result) => {
       if (result.isConfirmed) {

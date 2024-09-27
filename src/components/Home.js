@@ -83,7 +83,7 @@ function Home() {
 
   const deleteBookCard = async (bid) => {
     Swal.fire({
-      title: "¿Estás seguro de confirmar devolución de esta tarjeta?",
+      title: "¿Estás seguro de confirmar devolución de este libro?",
       showDenyButton: true,
       confirmButtonText: "Si",
       denyButtonText: `No`,
@@ -100,7 +100,7 @@ function Home() {
             );
           });
       } else if (result.isDenied) {
-        Swal.fire("Cancelado", "La carta no fue devuelta", "info");
+        Swal.fire("Cancelado", "El libro no fue devuelto", "info");
       }
     });
   };

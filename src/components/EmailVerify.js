@@ -27,7 +27,7 @@ const EmailVerify = () => {
     <div className="flex justify-center h-full mt-64">
       {validUrl ? (
         <Alert
-          icon={<i class="bi bi-patch-check-fill text-3xl"></i>}
+          icon={<i className="bi bi-patch-check-fill text-3xl"></i>}
           className="w-fit h-32 text-xl"
           color="green"
         >
@@ -42,7 +42,7 @@ const EmailVerify = () => {
         </Alert>
       ) : (
         <Alert
-          icon={<i class="bi bi-exclamation-triangle-fill text-3xl"></i>}
+          icon={<i className="bi bi-exclamation-triangle-fill text-3xl"></i>}
           color="red"
           className="w-fit h-32 text-xl"
         >

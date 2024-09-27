@@ -17,7 +17,6 @@ export function UserContextProvider({children}){
       setUser(null);
       setUserLoading(false);
       Cookies.remove("token"); // Eliminar el JWT de las cookies
-      localStorage.removeItem("user");
       navigate("/login");
     };
     
@@ -43,7 +42,7 @@ export function UserContextProvider({children}){
           console.error("Error al obtener el usuario:", error);
           handleUnauthorized();
         });
-    } else if(window.location.pathname !== "/register") {
+    } else if(window.location.pathname !== "/register" && window.location.pathname !== "/recover-pass") {
       handleUnauthorized();
     }
   },[navigate])

@@ -22,7 +22,7 @@ function App() {
       <UserContextProvider>
         <Toaster position='bottom-right' toastOptions={{duration: 2000}}/>
         <Routes>
-            <Route element={<Layout />}>
+          <Route element={<Layout />}>
             <Route path="/" element={<Navigate to="/login" />}/>
             <Route path="/home" element={<Home/>}/>
             <Route path='/form-books' element={<FormBook/>}/>

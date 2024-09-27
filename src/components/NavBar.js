@@ -25,7 +25,6 @@ function NavBar() {
 
       toast.success("Cerrado de sesión exitoso ¡Hasta luego!");
       Cookies.remove("token");
-      localStorage.removeItem("user");
       navigate("/login");
       setUser(null);
     });
@@ -55,7 +54,7 @@ function NavBar() {
             )}
             <Menu>
               <MenuHandler>
-                <i class="bi bi-person-circle text-white text-xl md:text-3xl px-3"></i>
+                <i className="bi bi-person-circle text-white text-xl md:text-3xl px-3"></i>
               </MenuHandler>
               <MenuList>
                 <MenuItem className="flex items-center gap-2">

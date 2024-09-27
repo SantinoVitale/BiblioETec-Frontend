@@ -192,7 +192,7 @@ const BooksManager = () => {
                     </Typography>
                   </div>
                 }>
-                  <i class="bi bi-question-circle"></i>
+                  <i className="bi bi-question-circle"></i>
                 </Tooltip>}
             />
           </div>
@@ -289,7 +289,7 @@ const BooksManager = () => {
                         </Typography>
                       </div>
                     }>
-                      <i class="bi bi-question-circle"></i>
+                      <i className="bi bi-question-circle"></i>
                     </Tooltip>}
                   />
                 </div>

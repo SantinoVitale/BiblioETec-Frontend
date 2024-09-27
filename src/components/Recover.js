@@ -16,6 +16,7 @@ function Recover() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [value, setValue] = useState("@alumno.etec.um.edu.ar");
+  const [loading, setLoading] = useState(false);
   const code = searchParams.get("code");
   const email = searchParams.get("email");
   const [data, setData] = useState({
@@ -26,7 +27,7 @@ function Recover() {
 
   useEffect(() => {
     getMail();
-  });
+  }, []);
   /*
   ! Ver si se implementa luego 
   const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +58,7 @@ function Recover() {
 
   const changePass = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const { email, password, code } = data;
     await axios
       .post("/api/users/recoverPass/changePass", {
@@ -73,6 +74,10 @@ function Recover() {
       })
       .catch((err) => {
         toast.error(err.response.data.message);
+        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -81,7 +86,7 @@ function Recover() {
       <Card className="w-96 shadow-2xl">
         <CardHeader
           variant="gradient"
-          color="blue"
+          color="deep-purple"
           className="mb-4 grid h-28 place-items-center"
         >
           <Typography variant="h3" color="white">
@@ -137,8 +142,8 @@ function Recover() {
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" color="blue" fullWidth type="submit">
-              Cambiar contraseña
+            <Button variant="gradient" color="deep-purple" fullWidth type="submit" disabled={loading}>
+              {loading ? "Cargando..." : "Cambiar contraseña"}
             </Button>
           </CardFooter>
         </form>
